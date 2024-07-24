@@ -1,6 +1,6 @@
 # Use Cases
 
-DRAFT/BRAINSTORMING
+DRAFT
 
 Takes as user input *n* number of chords (possibly to be selected from dropdown?).
 
