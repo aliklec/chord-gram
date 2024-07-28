@@ -36,8 +36,19 @@ def get_chord_data(url):
         logging.error(f"There was an error: {e}")
         print(f"There was an error: {e}")
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
 #     test = get_chord_data('https://tabs.ultimate-guitar.com/tab/misc-traditional/greensleeves-chords-173713')
 #     test2 = get_chord_data('www.test.com')
 #     print(test)
 #     print(test2)
+
+# song data for testing
+    song1 = get_chord_data('https://tabs.ultimate-guitar.com/tab/misc-traditional/take-me-out-to-the-ball-game-chords-653035')
+    print(song1)
+    song2 = get_chord_data('https://tabs.ultimate-guitar.com/tab/misc-traditional/happy-birthday-chords-1084205')
+    print(song2)
+    song3 = get_chord_data('https://tabs.ultimate-guitar.com/tab/irving-berlin/all-by-myself-chords-2762746')
+    print(song3)
+    songs = [song1, song2, song3]
+    print()
+    print(songs)

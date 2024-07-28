@@ -27,6 +27,12 @@ class ChordType(Enum):
     SUS4 = {'sus4': [0, 5, 7]}  # Suspended 4th
     ADD9 = {'add9': [0, 4, 7, 14]}  # Major add9
     MIN_ADD9 = {'m add9': [0, 3, 7, 14]}  # Minor add9
+    DIM7 = {'dim7': [0, 3, 6, 9]} # Diminished 7th
+
+'''
+examples from data to add: 
+F+ also know as F augmented (F, A, C#) 0, 4, 8
+'''
 
 
 class Chord:

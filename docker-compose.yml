@@ -1,0 +1,15 @@
+version: "2"
+services:
+  app: #app will have code in it. links to db
+    build: .
+    links:
+      - db
+
+  db: #db container has the mysql image (this will run the database)
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d/:ro #this points to data folder - tells doctor to run the init.sql file when we start the database
