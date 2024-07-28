@@ -1,4 +1,3 @@
-from typing import List, Dict, Any
 
 from db.repository import *
 import mysql.connector
@@ -22,9 +21,9 @@ class MysqlRepository(Repository):
 
     # destructor
     # when I'm done this will get called and close the DB connection
-    def __del__(self):
-        self.cursor.close()
-        self.connection.close()
+    # def __del__(self):
+    #     self.cursor.close()
+    #     self.connection.close()
 
 
     def load_chord(self):
@@ -34,7 +33,20 @@ class MysqlRepository(Repository):
                     'url': url,
                     'chords': chords,
                     } for (id, url, chords) in self.cursor]
-        print(entries)
-        print(type(entries))
         return entries
 
+if __name__ == '__main__':
+    repo = MysqlRepository()
+    mysongs = repo.load_chord()
+    # print(len(mysongs))
+    # print(type(mysongs))
+    # for item in mysongs:
+    #     print(item)
+    #     print(item['chords'])
+    #     print(type(item))
+    #
+    # print()
+    # print(len(mysongs))
+    # print(type(mysongs))
+    print(mysongs[1]['id'])
+    print(type(mysongs[0]['chords']))

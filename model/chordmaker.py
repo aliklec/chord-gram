@@ -44,7 +44,7 @@ class Chord:
         self.bass = bass if bass else root
         self.notes = self.create_chord()
 
-    def create_chord(self) -> list[Note]:
+    def create_chord(self):
         root_index = self.all_notes.index(self.root)
         intervals = list(self.chord_type.value.values())[0]
         chord_notes = [self.all_notes[(root_index + interval) % len(self.all_notes)] for interval in intervals]
