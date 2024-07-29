@@ -13,7 +13,6 @@ CREATE TABLE song_data(
 INSERT INTO song_data
     (url, chords)
 
-
 VALUES
     ('https://tabs.ultimate-guitar.com/tab/misc-traditional/take-me-out-to-the-ball-game-chords-653035','C G C G A7 D7 Dm G G7 C G C C/B A7 F F# C A7 D7 G7 C'),
     ('https://tabs.ultimate-guitar.com/tab/misc-traditional/happy-birthday-chords-1084205','C G7 G7 C C F C G7 C'),

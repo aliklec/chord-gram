@@ -2,8 +2,8 @@ from db.mysql_repository import *
 
 repo = MysqlRepository()
 
-def test_load_chord_test():
-    mysongs = repo.load_chord()
+def test_load_songs_test():
+    mysongs = repo.load_songs()
     assert len(mysongs) == 3
     assert isinstance(mysongs, list)
     for data in mysongs:

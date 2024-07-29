@@ -1,10 +1,8 @@
-
 from db.repository import *
 import mysql.connector
 
-# this code will connect us to the database
-
-#note - the class below inherits from Repository abstract class
+# this code connects to the database
+# class below inherits from Repository abstract class
 class MysqlRepository(Repository):
 
     def __init__(self):
@@ -19,14 +17,16 @@ class MysqlRepository(Repository):
         self.connection = mysql.connector.connect(**config)
         self.cursor = self.connection.cursor()
 
+    # below destructor code causes error "weakly-referenced object no longer exists"
+    # need to research and fix later
+
     # destructor
-    # when I'm done this will get called and close the DB connection
+    # when done this gets called and close the DB connection
     # def __del__(self):
     #     self.cursor.close()
     #     self.connection.close()
 
-
-    def load_chord(self):
+    def load_songs(self):
         sql = 'SELECT * FROM song_data'
         self.cursor.execute(sql)
         entries = [{'id': id,
@@ -34,19 +34,3 @@ class MysqlRepository(Repository):
                     'chords': chords,
                     } for (id, url, chords) in self.cursor]
         return entries
-
-if __name__ == '__main__':
-    repo = MysqlRepository()
-    mysongs = repo.load_chord()
-    # print(len(mysongs))
-    # print(type(mysongs))
-    # for item in mysongs:
-    #     print(item)
-    #     print(item['chords'])
-    #     print(type(item))
-    #
-    # print()
-    # print(len(mysongs))
-    # print(type(mysongs))
-    print(mysongs[1]['id'])
-    print(type(mysongs[0]['chords']))
