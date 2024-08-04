@@ -11,3 +11,6 @@ class Repository(metaclass=abc.ABCMeta):
     def load_songs(self):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def load_chords(self):
+        raise NotImplementedError
