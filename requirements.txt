@@ -4,3 +4,4 @@ scikit-learn
 numpy
 requests
 mysql-connector
+pandas #may not be needed for final chord

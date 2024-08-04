@@ -103,15 +103,15 @@ def write_chords_to_csv(urls, filename):
 
 if __name__ == '__main__':
     #
-    idxs = get_index_pages(1,1,1)
-    # print(idxs)
+    idxs = get_index_pages(1,2,1)
+    print("SAVED LINKS ARE",idxs)
     song_pages = get_song_pages(idxs)
     print("----------------------------------------------")
-    test = song_pages[0:20]
+    test = song_pages[0:30]
     print(test)
     print(song_pages)
 
-    write_chords_to_csv(test, 'chords.csv')
+    write_chords_to_csv(test, '../internal/chords.csv')
 
 
 # # song data for testing

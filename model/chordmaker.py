@@ -29,6 +29,13 @@ class ChordType(Enum):
     MIN_ADD9 = {'m add9': [0, 3, 7, 14]}  # Minor add9
     DIM7 = {'dim7': [0, 3, 6, 9]} # Diminished 7th
 
+    # to test or add:
+    # 6sus2 [0 2 7 9]   as in D6sus2
+    # 6 chord / [0379] as in Fm6
+    # add11 [0 4 7 17]
+    # add4 [0 4 5 7]
+    # 7sus4 [0 5 7 10]
+
 '''
 examples from data to add: 
 F+ also know as F augmented (F, A, C#) 0, 4, 8
