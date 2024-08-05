@@ -47,8 +47,3 @@ class MysqlRepository(Repository):
             chords_list.append(row[0])
         return chords_list
 
-
-# if __name__ == '__main__':
-#     repo = MysqlRepository()
-#     mychords = repo.load_chords()
-#     print(type(mychords))

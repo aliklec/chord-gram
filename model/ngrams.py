@@ -1,35 +1,80 @@
 from sklearn.feature_extraction.text import CountVectorizer
-import numpy as np
 import random
-from model.scraper import *
-
-# song data for testing
-# song1 = get_chord_data('https://tabs.ultimate-guitar.com/tab/misc-traditional/take-me-out-to-the-ball-game-chords-653035')
-# song2 = get_chord_data('https://tabs.ultimate-guitar.com/tab/misc-traditional/happy-birthday-chords-1084205')
-# songs = [song1, song2]
 
 class Ngrams:
-    def __init__(self, song_data, n):
+    def __init__(self, song_data):
         self.song_data = song_data
-        self.n = n
-        self.vectorizer = CountVectorizer(ngram_range=(n, n), lowercase=False, token_pattern=r'\S+')
+        self.ngram_counts = {}
 
-    def get_ngram_counts(self):
-        X = self.vectorizer.fit_transform(self.song_data)
-        # NOTE/REMINDER:
-        # below uses numpy
-        # summing counts across all songs. rows are songs, columns are ngram features
-        # X.sum(axis = 0) sums columns to get ngram counts [axis 0 means columns / axis 1 means rows]
-        # .A returns matrix as a numpy array, and the 1 index flattens it into a 1-dimensional array
+    def get_ngrams(self, n):
+        vectorizer = CountVectorizer(ngram_range=(n, n), lowercase=False, token_pattern=r'\S+')
+        X = vectorizer.fit_transform(self.song_data)
         ngram_counts = X.sum(axis=0).A1
-        ngram_features = self.vectorizer.get_feature_names_out()
-        return dict(zip(ngram_features, ngram_counts))
+        ngram_features = vectorizer.get_feature_names_out()
+        self.ngram_counts[n] = dict(zip(ngram_features, ngram_counts))
+        return self.ngram_counts[n]
 
+    def cond_probs(self, context_size):
+        if context_size < 1:
+            raise ValueError("context_size must be at least 1")
+
+        context_counts = self.get_ngrams(context_size)
+        target_counts = self.get_ngrams(context_size + 1)
+        cond_probs = {}
+
+        for target_sequence, target_count in target_counts.items():
+            chords = target_sequence.split()
+            context = ' '.join(chords[:context_size])
+            if context in context_counts:
+                prob = target_count / (context_counts[context] + .001)
+                cond_probs[target_sequence] = prob
+
+        return cond_probs
+
+    def show_probs(self, context_size=2):
+        cond_probs = self.cond_probs(context_size)
+        for target_sequence, prob in cond_probs.items():
+            chords = target_sequence.split()
+            context = ' '.join(chords[:-1])
+            target = chords[-1]
+            print(f"P({target} | {context}) = {prob:.4f}")
+
+    def generate_sequence(self, start_chord, sequence_length, context_size=2):
+        if context_size < 1:
+            raise ValueError("context_size must be at least 1")
+
+        cond_probs = self.cond_probs(context_size)
+        unigram_counts = self.get_ngrams(1)
+
+        sequence = [start_chord]
+
+        for _ in range(sequence_length - 1):
+            current_context = ' '.join(sequence[-context_size:])
+            possible_next_chords = {}
+
+            # If we don't have enough context yet, use a partial match
+            for target_sequence, prob in cond_probs.items():
+                if target_sequence.endswith(current_context):
+                    next_chord = target_sequence.split()[-1]
+                    possible_next_chords[next_chord] = prob
+
+            if not possible_next_chords:
+                # Fall back to unigram probabilities if no matching context
+                total_count = sum(unigram_counts.values())
+                possible_next_chords = {chord: count / total_count for chord, count in unigram_counts.items()}
+
+            next_chord = random.choices(list(possible_next_chords.keys()),
+                                        weights=list(possible_next_chords.values()))[0]
+            sequence.append(next_chord)
+
+        return ' '.join(sequence)
 
 # if __name__ == '__main__':
-#     print(songs)
-#     mysongdata = Ngrams(songs, 2)
-#     view = mysongdata.get_ngram_counts()
-#     for ngram, count in view.items():
-#         print(f'{ngram}: {count}')
+#     from db.mysql_repository import *
+#     repo = MysqlRepository()
+#     mychords = repo.load_chords()
+#     test = Ngrams(mychords)
+
+
+
 

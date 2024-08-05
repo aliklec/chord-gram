@@ -19,12 +19,13 @@ def get_index_pages(start, stop, step):
     return idxs
 
 # from within the index pages, get a list of links to the song pages
+# Website uses JSON, need to pull out of dictionary
 def get_song_pages(index_pages):
 
     link_list = []
 
     for url in index_pages:
-        print(url)
+
         headers = {'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url, headers=headers)
         html_content = response.text
@@ -43,15 +44,14 @@ def get_song_pages(index_pages):
                 link_list.append(d['tab_url'])
                 # delay = random.randint(2,3)
                 delay = random.uniform(1.5, 3.5)
-                print(f"Sleeping for {delay:.2f} seconds")
+                # print(f"Sleeping for {delay:.2f} seconds")
                 time.sleep(delay)
 
     return link_list
 
-# takes in a ultimate guitar song page and returns only the chords for that song as a string
+# takes in song page and returns only the chords for that song as a string
 def get_chord_data(url):
-    print("in get chord data")
-    print(url)
+
     validsite = 'https://tabs.ultimate-guitar.com'
     if not url.startswith(validsite):
         print("Scraper only works for Ultimate Guitar chords")
@@ -89,38 +89,21 @@ def write_chords_to_csv(urls, filename):
         writer.writerow(['URL', 'Chords'])
 
         for url in urls:
-            print(url)
+            # print(url)
             chords = get_chord_data(url)
             if chords:
                 writer.writerow([url, chords])
             delay = random.uniform(1.5, 3.5)
-            print(f"Sleeping for {delay:.2f} seconds")
+            # print(f"Sleeping for {delay:.2f} seconds")
             time.sleep(delay)
-            print(f"done with writing chords for {url}")
     abs_path = os.path.abspath(filename)
     print(f"All URLs processed. Data saved to {abs_path}")
 
 
-if __name__ == '__main__':
-    #
-    idxs = get_index_pages(1,2,1)
-    print("SAVED LINKS ARE",idxs)
-    song_pages = get_song_pages(idxs)
-    print("----------------------------------------------")
-    test = song_pages[0:30]
-    print(test)
-    print(song_pages)
+# if __name__ == '__main__':
+#     #
+#     idxs = get_index_pages(1,2,1)
+#     song_pages = get_song_pages(idxs)
+#     test = song_pages[0:30]
+#     write_chords_to_csv(test, '../internal/chords.csv')
 
-    write_chords_to_csv(test, '../internal/chords.csv')
-
-
-# # song data for testing
-#     song1 = get_chord_data('https://tabs.ultimate-guitar.com/tab/misc-traditional/take-me-out-to-the-ball-game-chords-653035')
-#     print(song1)
-#     song2 = get_chord_data('https://tabs.ultimate-guitar.com/tab/misc-traditional/happy-birthday-chords-1084205')
-#     print(song2)
-#     song3 = get_chord_data('https://tabs.ultimate-guitar.com/tab/irving-berlin/all-by-myself-chords-2762746')
-#     print(song3)
-#     songs = [song1, song2, song3]
-#     print()
-#     print(songs)
