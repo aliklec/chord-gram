@@ -2,13 +2,13 @@
 
 DRAFT
 
-Use case 1
+Use case 1:
 Show information about common chord combinations
 
-Use case 2
+Use case 2:
 Show probability of a chord given its context
 
-Use case 3
+Use case 3:
 Given starting chord, generate sequence of probable chords
 
 
