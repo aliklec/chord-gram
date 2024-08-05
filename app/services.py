@@ -10,7 +10,7 @@ class Services:
 
     # Use case 1
     # Show information about common chord combinations
-    def show_common_chord_combos(self, n=3, top_k=10):
+    def show_common_chord_combos(self, n=3, top_k=5):
         mygrams = self.ngrams.get_ngrams(n)
         sorted_grams = sorted(mygrams.items(), key=lambda item: item[1], reverse=True)
 
@@ -25,16 +25,17 @@ class Services:
 
     # Use case 3
     # Given starting chord, generate sequence of probable chords
-    def get_probable_sequence(self, start_chord, sequence_length, context_size=3):
+    def get_probable_sequence(self, start_chord, sequence_length, context_size=5):
         return self.ngrams.generate_sequence(start_chord, sequence_length, context_size)
 
 
-# if __name__ == '__main__':
-    # service = Services()
-    # service.show_common_chord_combos()
-    # service.show_probs()
-    # chord_sequence = service.get_probable_sequence('C', 10, context_size=5)
-    # print(chord_sequence)
+if __name__ == '__main__':
+    service = Services()
+    x = service.show_common_chord_combos()
+    print(x)
+    service.show_probs()
+    chord_sequence = service.get_probable_sequence('C', 10)
+    print(chord_sequence)
 
 
 

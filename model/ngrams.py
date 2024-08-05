@@ -31,7 +31,10 @@ class Ngrams:
 
         return cond_probs
 
-    def show_probs(self, context_size=2):
+    def show_probs(self, context_size):
+        if context_size < 1:
+            raise ValueError("context_size must be at least 1")
+
         cond_probs = self.cond_probs(context_size)
         for target_sequence, prob in cond_probs.items():
             chords = target_sequence.split()
@@ -39,7 +42,7 @@ class Ngrams:
             target = chords[-1]
             print(f"P({target} | {context}) = {prob:.4f}")
 
-    def generate_sequence(self, start_chord, sequence_length, context_size=2):
+    def generate_sequence(self, start_chord, sequence_length, context_size):
         if context_size < 1:
             raise ValueError("context_size must be at least 1")
 

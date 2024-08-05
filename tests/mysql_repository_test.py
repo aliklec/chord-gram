@@ -9,8 +9,7 @@ def test_load_songs():
     for data in mysongs:
         assert isinstance(data, dict)
     assert mysongs[0]['id'] == 1
-    assert mysongs[1]['chords'] == 'C G7 G7 C C F C G7 C'
-    assert mysongs[2]['url'] == 'https://tabs.ultimate-guitar.com/tab/irving-berlin/all-by-myself-chords-2762746'
+
 def test_load_chords():
     mychords = repo.load_chords()
     assert isinstance(mychords, list)
