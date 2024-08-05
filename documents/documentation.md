@@ -18,6 +18,7 @@ Other possible outputs:
 - A "generate" button that will start generating random chords and note information
 
 
-# Future Improvements
-Smoothing/balancing to deal with different song lengths or certain songs repeating chords many times leading to overestimated probability?
-Ignore ngrams that only occur a small number of times?
+# Thoughts/Future Improvements
+-Smoothing/balancing to deal with different song lengths or certain songs repeating chords many times leading to overestimated probability?
+-Ignore ngrams that only occur a small number of times?
+-Effective ngram range for chord sequence predicton is very different from sentences. For example, the song [Riptide]([/guides/content/editing-an-existing-page](https://tabs.ultimate-guitar.com/tab/vance-joy/riptide-chords-1237247)) is made up almost entirely of repetitions of Am G C,  so for example you end up with a count of 30+ for 10 grams like "Am G C Am G C Am G C Am". Smaller ngram ranges work better. Maybe a future version would try to break up songs into "sentences" and use SOS/EOS information.
