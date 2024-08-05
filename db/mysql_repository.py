@@ -29,7 +29,6 @@ class MysqlRepository(Repository):
     #     if self.connection and self.connection.is_connected():
     #         self.connection.close()
 
-
     def load_songs(self):
         sql = 'SELECT * FROM song_data'
         self.cursor.execute(sql)
