@@ -10,12 +10,27 @@ cors = CORS(app, resources={r"/parse": {"origins": "http://localhost:port"}})
 
 service = Services()
 
+@app.route("/hello", methods=["GET"])
+def hello():
+    return "Hello World!"
 
-@app.route("/generate", methods=["GET"])
-def show_probs():
-    output = service.show_probs()
-    return output
+# @app.route("/probs", methods=["GET"])
+# def show_probs():
+#     output = service.show_probs()
+#     return jsonify(output)
 
+@app.route("/c-chord", methods=["GET"])
+def show_c():
+    output = service.c_start()
+    return jsonify(output)
+
+@app.route("/a-chord", methods=["GET"])
+def show_a():
+    output = service.a_start()
+    return jsonify(output)
 
 if __name__ == '__main__':
+    #
+    # app.run()
     app.run(host='0.0.0.0')
+
