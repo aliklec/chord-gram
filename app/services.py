@@ -28,14 +28,14 @@ class Services:
     def get_probable_sequence(self, start_chord, sequence_length, context_size=5):
         return self.ngrams.generate_sequence(start_chord, sequence_length, context_size)
 
-
-if __name__ == '__main__':
-    service = Services()
-    x = service.show_common_chord_combos()
-    print(x)
-    service.show_probs()
-    chord_sequence = service.get_probable_sequence('C', 10)
-    print(chord_sequence)
+#
+# if __name__ == '__main__':
+#     service = Services()
+#     x = service.show_common_chord_combos()
+#     print(x)
+#     service.show_probs()
+#     chord_sequence = service.get_probable_sequence('C', 10)
+#     print(chord_sequence)
 
 
 

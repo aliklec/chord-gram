@@ -10,8 +10,8 @@ class MysqlRepository(Repository):
         config = {
             'user': 'root',
             'password': 'root',
-            'host': 'localhost', # to run LOCALLY, this should be localhost (then back to 'host': 'db')
-            'port': '32000', # to run LOCALLY, this should be 32000 (then back to 'port': '3306')
+            'host': 'db', # to run LOCALLY, this should be localhost (then back to 'host': 'db')
+            'port': '3306', # to run LOCALLY, this should be 32000 (then back to 'port': '3306')
             'database': 'songs',
             'allow_local_infile': True
         }

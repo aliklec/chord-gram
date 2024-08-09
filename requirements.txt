@@ -6,3 +6,7 @@ numpy
 requests
 mysql-connector
 pandas # using this in my internal files -- not needed for final project code
+
+Flask
+httpie
+flask-cors
