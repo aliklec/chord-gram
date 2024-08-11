@@ -55,17 +55,18 @@ class Ngrams:
             current_context = ' '.join(sequence[-context_size:])
             possible_next_chords = {}
 
-            # If we don't have enough context yet, use a partial match
             for target_sequence, prob in cond_probs.items():
                 if target_sequence.endswith(current_context):
                     next_chord = target_sequence.split()[-1]
                     possible_next_chords[next_chord] = prob
 
+            # Use unigram probabilities if no matching context
             if not possible_next_chords:
-                # Fall back to unigram probabilities if no matching context
                 total_count = sum(unigram_counts.values())
                 possible_next_chords = {chord: count / total_count for chord, count in unigram_counts.items()}
 
+            # https://docs.python.org/3/library/random.html#random.choices
+            # selected randomly but chords with higher probabilities are more likely
             next_chord = random.choices(list(possible_next_chords.keys()),
                                         weights=list(possible_next_chords.values()))[0]
             sequence.append(next_chord)

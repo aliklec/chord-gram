@@ -12,25 +12,26 @@ service = Services()
 
 @app.route("/hello", methods=["GET"])
 def hello():
-    return "Hello World!"
+    return "Hello BRAVE New World!"
 
-# @app.route("/probs", methods=["GET"])
-# def show_probs():
-#     output = service.show_probs()
+@app.route("/common", methods=["GET"])
+def show_common():
+    output = service.show_common_chord_combos()
+    return jsonify(output)
+
+@app.route("/generate", methods=["POST"])
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
+def generate_chords():
+    start_chord = request.get_json()
+    chords = service.make_sequence(start_chord)
+    return jsonify(chords)
+
+# @app.route("/c-chord", methods=["GET"])
+# def show_c():
+#     output = service.c_start()
 #     return jsonify(output)
 
-@app.route("/c-chord", methods=["GET"])
-def show_c():
-    output = service.c_start()
-    return jsonify(output)
-
-@app.route("/a-chord", methods=["GET"])
-def show_a():
-    output = service.a_start()
-    return jsonify(output)
-
 if __name__ == '__main__':
-    #
-    # app.run()
+    # app.run(debug=True)
     app.run(host='0.0.0.0')
 

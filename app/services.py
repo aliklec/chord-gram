@@ -10,38 +10,31 @@ class Services:
 
     # Use case 1
     # Show information about common chord combinations
-    def show_common_chord_combos(self, n=3, top_k=5):
+    def show_common_chord_combos(self, n=3, top_k=10):
         mygrams = self.ngrams.get_ngrams(n)
         sorted_grams = sorted(mygrams.items(), key=lambda item: item[1], reverse=True)
 
-        print(f"Most Common {n}-Chord Combinations:")
+        result = {}
         for ngram, count in sorted_grams[:top_k]:
-            print(f"{ngram}: {count}")
+            result[ngram] = int(count)
+
+        return result
+
 
     # Use case 2
-    # Show probability of a chord given its context
-    def show_probs(self, context_size=2):
-        return self.ngrams.show_probs(context_size)
+    # Given starting chord, generate a sequence of probable chords
+    def make_sequence(self, input_chord: str):
+        return self.ngrams.generate_sequence(input_chord, 10, context_size=10)
 
-    # Use case 3
-    # Given starting chord, generate sequence of probable chords
-    def get_probable_sequence(self, start_chord, sequence_length, context_size=5):
-        return self.ngrams.generate_sequence(start_chord, sequence_length, context_size)
 
-    def c_start(self):
-        return self.ngrams.generate_sequence("C", 5, context_size=10)
+    # FOR TESTING
+    # def c_start(self):
+    #     return self.ngrams.generate_sequence("C", 10, context_size=5)
 
-    def a_start(self):
-        return self.ngrams.generate_sequence("A", 5, context_size=10)
-
-#
 if __name__ == '__main__':
     service = Services()
-    # x = service.show_common_chord_combos()
-    # print(x)
-    # y = service.show_probs()
-    # print(type(y))
-    # print(y)
+    # print(service.show_common_chord_combos())
+    # service.show_probs()
     # chord_sequence = service.get_probable_sequence('C', 10)
     # print(chord_sequence)
     # z = service.c_start()

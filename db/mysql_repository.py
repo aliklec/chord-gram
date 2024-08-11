@@ -10,8 +10,8 @@ class MysqlRepository(Repository):
         config = {
             'user': 'root',
             'password': 'root',
-            'host': 'db', # to run LOCALLY, this should be localhost (then back to 'host': 'db')
-            'port': '3306', # to run LOCALLY, this should be 32000 (then back to 'port': '3306')
+            'host': 'db', # locally: localhost / default: 'db'
+            'port': '3306', # locally: 32000 / default: '3306'
             'database': 'songs',
             'allow_local_infile': True
         }
@@ -23,11 +23,11 @@ class MysqlRepository(Repository):
 
     # destructor
     # when done this gets called and close the DB connection
-    # def __del__(self):
-    #     if self.cursor:
-    #         self.cursor.close()
-    #     if self.connection and self.connection.is_connected():
-    #         self.connection.close()
+    def __del__(self):
+        if self.cursor:
+            self.cursor.close()
+        if self.connection and self.connection.is_connected():
+            self.connection.close()
 
     def load_songs(self):
         sql = 'SELECT * FROM song_data'

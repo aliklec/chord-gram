@@ -1,11 +1,11 @@
-# This project uses Python 3.8
+
 pytest
 beautifulsoup4
 scikit-learn
 numpy
 requests
 mysql-connector
-pandas # using this in my internal files -- not needed for final project code
+#pandas # used for internal files - not needed for final code
 
 Flask
 httpie
