@@ -18,9 +18,6 @@ class MysqlRepository(Repository):
         self.connection = mysql.connector.connect(**config)
         self.cursor = self.connection.cursor()
 
-    # below destructor code causes error "weakly-referenced object no longer exists"
-    # need to research and fix later
-
     # destructor
     # when done this gets called and close the DB connection
     def __del__(self):

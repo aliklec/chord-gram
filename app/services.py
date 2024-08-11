@@ -24,8 +24,7 @@ class Services:
     # Use case 2
     # Given starting chord, generate a sequence of probable chords
     def make_sequence(self, input_chord: str):
-        return self.ngrams.generate_sequence(input_chord, 10, context_size=10)
-
+        return self.ngrams.generate_sequence(input_chord, 5, context_size=10)
 
     # FOR TESTING
     # def c_start(self):
