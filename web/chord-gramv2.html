@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chord Sequence Generator</title>
+</head>
+<body>
+
+<h1>Chord Sequence Generator</h1>
+<br><br>
+<form id="form">
+    <div class="input-group">
+        <label for="chord">Starting Chord: </label>
+        <select id="chord" name="chord">
+            <option value="">Select a chord</option>
+        </select>
+    </div>
+    <br><br>
+    <button type="submit" value="chord">Generate Sequence</button>
+</form>
+<br><br>
+<div>Response: </div>
+<pre id="response"></pre>
+
+<script>
+
+const chords = ["A", "Am", "B", "Bm", "C", "Cm"]; // update with full set
+
+function populateChords() {
+    const selectElement = document.getElementById('chord');
+    chords.forEach(chord => {
+        const option = document.createElement('option');
+        option.value = chord;
+        option.textContent = chord;
+        selectElement.appendChild(option);
+    });
+}
+
+async function handleSubmit(event) {
+    event.preventDefault();
+
+    const chord = document.getElementById('chord').value;
+    console.log({chord});
+
+    if (!chord) {
+        document.getElementById('response').textContent = "Please select a chord";
+        return;
+    }
+
+    const response = await fetch('http://localhost:5000/generate', {
+        method: 'POST',
+        body: JSON.stringify(chord),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const myJson = await response.json();
+    console.log(myJson);
+    document.getElementById('response').textContent = JSON.stringify(myJson, undefined, 2);
+}
+
+const form = document.getElementById("form");
+form.addEventListener("submit", handleSubmit, false);
+
+populateChords();
+</script>
+
+</body>
+</html>
