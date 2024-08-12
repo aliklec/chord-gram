@@ -7,7 +7,8 @@ COPY . .
 RUN pip install -U pip
 RUN pip install -r requirements.txt
 
-# CMD tail -f /dev/null
+## just to keep container open - comment out when using Flask
+#CMD tail -f /dev/null
 
-#below is to run Flask app
+# to run Flask app
 CMD python app.py

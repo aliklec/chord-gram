@@ -2,23 +2,24 @@ from enum import Enum
 import random
 
 # Enumerate notes
+# UPDATE TO INCLUDE NOTE FREQUENCY INFO
 class Note(Enum):
     C = "C"
-    C_SHARP = "C_SHARP"
+    C_SHARP = "C#"
     D = "D"
-    D_SHARP = "D_SHARP"
+    D_SHARP = "D#"
     E = "E"
     F = "F"
-    F_SHARP = "F_SHARP"
+    F_SHARP = "F#"
     G = "G"
-    G_SHARP = "G_SHARP"
+    G_SHARP = "G#"
     A = "A"
-    A_SHARP = "A_SHARP"
+    A_SHARP = "A#"
     B = "B"
 
 # Enumerate chords
 class ChordType(Enum):
-    MAJ = {'maj': [0, 4, 7]}  # Major
+    MAJ = {'': [0, 4, 7]}  # Major
     MIN = {'m': [0, 3, 7]}     # Minor
     DOM7 = {'7': [0, 4, 7, 10]}  # Dominant 7th
     MAJ7 = {'maj7': [0, 4, 7, 11]}  # Major 7th
@@ -30,17 +31,12 @@ class ChordType(Enum):
     DIM7 = {'dim7': [0, 3, 6, 9]} # Diminished 7th
 
     # to test or add:
-    # 6sus2 [0 2 7 9]   as in D6sus2
-    # 6 chord / [0379] as in Fm6
+    # 6sus2 [0 2 7 9] as in D6sus2
+    # 6 chord [0 3 7 9] as in Fm6
     # add11 [0 4 7 17]
     # add4 [0 4 5 7]
     # 7sus4 [0 5 7 10]
-
-'''
-examples from data to add: 
-F+ also know as F augmented (F, A, C#) 0, 4, 8
-'''
-
+    # F+ also know as F augmented (F, A, C#) 0, 4, 8
 
 class Chord:
 
@@ -56,7 +52,7 @@ class Chord:
         intervals = list(self.chord_type.value.values())[0]
         chord_notes = [self.all_notes[(root_index + interval) % len(self.all_notes)] for interval in intervals]
 
-        # Need to figure out if this will work for inversions too
+        # Figure out if this will work for inversions
         if self.bass != self.root:
             # Move bass note to the bottom
             chord_notes = [self.bass] + [note for note in chord_notes if note != self.bass]
@@ -80,15 +76,15 @@ class Chord:
         chord_type = random.choice(list(ChordType))
         return cls(root, chord_type)
 
-# if __name__ == '__main__':
-#
-#     chord = Chord(Note.B, ChordType.MIN)
-#     print(chord)
-#
-#     g_over_b = Chord(Note.G, ChordType.MAJ, bass=Note.B)
-#     print(g_over_b)
-#
-#     random_chord = Chord.random()
-#     print("RANDOM GENERATED:",random_chord)
+if __name__ == '__main__':
+
+    chord = Chord(Note.B, ChordType.MIN)
+    print(chord)
+
+    g_over_b = Chord(Note.G, ChordType.MAJ, bass=Note.B)
+    print(g_over_b)
+
+    random_chord = Chord.random()
+    print("RANDOM GENERATED:",random_chord)
 
 

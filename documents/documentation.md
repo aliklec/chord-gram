@@ -1,22 +1,32 @@
+# API Documentation
 
+## View common chord combinations
 
-# View common chord combinations
+In order to view common chord combinations, the API can be called using a GET request. The endpoint is http://localhost:5000/common.
 
-The API can be called using a GET request. The endpoint is http://localhost:5000/common.
+A JSON response is returned showing the top 10 most common chord tri-grams found in the data.
 
-A JSON response is returned showing the top 10 most common 3-chord progressions.
+## Provide a starting chord to generate a sequence
 
-# Provide a starting chord to generate a sequence
+A starting chord can be submitted in order to generate a sequence of likely chords to follow. This can be done either through the HTML form or by accessing the API with a POST request.
+
+**HTML Form**
+
+The form `web/chord-gram.html` can be used to access a simple User Interface, where the user can enter the starting chord and click the `generate` button to create the sequence.
+
+![](/static/Capture.png)
+
+**API Access**
 
 The API can be called using a POST request. The endpoint is http://localhost:5000/generate.
 
-Make sure to set the header to "Content-Type: application/json"
+The header must be set to `"Content-Type: application/json"`
 
 The request body is the starting chord provided as a JSON string. For example:
 > "C"
 
 
-A JSON response is returned showing the generated sequences. For example:
+A JSON response is returned showing the generated sequence. For example:
 
 
 > "C Am/C Bm7 A Em7 C Am A D C"

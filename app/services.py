@@ -20,25 +20,20 @@ class Services:
 
         return result
 
-
     # Use case 2
     # Given starting chord, generate a sequence of probable chords
     def make_sequence(self, input_chord: str):
-        return self.ngrams.generate_sequence(input_chord, 5, context_size=10)
+        return self.ngrams.generate_sequence(input_chord, 10, context_size=10)
 
     # FOR TESTING
     # def c_start(self):
     #     return self.ngrams.generate_sequence("C", 10, context_size=5)
 
-if __name__ == '__main__':
-    service = Services()
-    # print(service.show_common_chord_combos())
-    # service.show_probs()
-    # chord_sequence = service.get_probable_sequence('C', 10)
-    # print(chord_sequence)
-    # z = service.c_start()
-    # print(z)
-    # print(type(z))
+# if __name__ == '__main__':
+#     service = Services()
+#     print(service.show_common_chord_combos())
+#     # print(service.c_start())
+#     print(service.make_sequence("Am"))
 
 
 

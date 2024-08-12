@@ -11,6 +11,8 @@ class Ngrams:
         X = vectorizer.fit_transform(self.song_data)
         ngram_counts = X.sum(axis=0).A1
         ngram_features = vectorizer.get_feature_names_out()
+        # Create a dictionary mapping n-grams to their counts
+        # self.ngram_counts[n]: dict, e.g., {'C G': 42, 'G Am': 31, ...}
         self.ngram_counts[n] = dict(zip(ngram_features, ngram_counts))
         return self.ngram_counts[n]
 
@@ -56,7 +58,7 @@ class Ngrams:
             possible_next_chords = {}
 
             for target_sequence, prob in cond_probs.items():
-                if target_sequence.endswith(current_context):
+                if target_sequence.endswith(current_context): #
                     next_chord = target_sequence.split()[-1]
                     possible_next_chords[next_chord] = prob
 
@@ -78,6 +80,11 @@ class Ngrams:
 #     repo = MysqlRepository()
 #     mychords = repo.load_chords()
 #     test = Ngrams(mychords)
+#     print(test)
+#     print(test.cond_probs(10))
+#     print(test.show_probs(2))
+#     test.generate_sequence("Am", 5, 3)
+
 
 
 
