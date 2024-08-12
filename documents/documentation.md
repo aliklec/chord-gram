@@ -13,7 +13,9 @@ A starting chord can be submitted in order to generate a sequence of likely chor
 **HTML Form**
 
 The form `web/chord-gram.html` can be used to access a simple User Interface, where the user can enter the starting chord and click the `generate` button to create the sequence.
-![Capture](https://github.com/user-attachments/assets/2bdff4b4-068b-48d3-ba2e-f8f0447705e2)
+
+![Capture](https://github.com/user-attachments/assets/9590ccb9-4690-4015-b378-ab87ffc33789)
+
 
 
 **API Access**
