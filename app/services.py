@@ -1,5 +1,6 @@
 import db.mysql_repository
 from model.ngrams import *
+from model.chordmaker import *
 
 class Services:
 
@@ -28,6 +29,24 @@ class Services:
     # FOR TESTING
     # def c_start(self):
     #     return self.ngrams.generate_sequence("C", 10, context_size=5)
+
+    # IN DEVELOPMENT
+
+
+    def make_chord(self, root: str, chord_type: str, bass: str = None):
+        try:
+            root_note = Note[root.upper().replace('#', '_SHARP')]
+            chord_type_enum = ChordType[chord_type.upper()]
+            bass_note = Note[bass.upper().replace('#', '_SHARP')] if bass else None
+
+            chord = Chord(root_note, chord_type_enum, bass_note)
+
+            return {
+                "name": chord.name,
+                "notes": [note.value for note in chord.notes]
+            }
+        except KeyError as e:
+            return {"error": f"Invalid input: {str(e)}"}
 
 # if __name__ == '__main__':
 #     service = Services()

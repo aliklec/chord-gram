@@ -2,9 +2,12 @@ from app.services import *
 from db.mysql_repository import *
 import pytest
 
+# write some tests that, with the proper testing data, will actually evaluate some of the probabilities, not just check whether certain characters were in the output.
+
 @pytest.fixture
 def services():
     return Services()
+
 
 def test_services_init(services):
     assert isinstance(services.repo, MysqlRepository)

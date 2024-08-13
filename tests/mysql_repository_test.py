@@ -4,7 +4,7 @@ repo = MysqlRepository()
 
 def test_load_songs():
     mysongs = repo.load_songs()
-    assert len(mysongs) == 3
+    assert len(mysongs) == 30
     assert isinstance(mysongs, list)
     for data in mysongs:
         assert isinstance(data, dict)

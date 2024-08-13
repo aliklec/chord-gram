@@ -40,6 +40,15 @@ def readme():
 #     output = service.c_start()
 #     return jsonify(output)
 
+# IN DEVELOPMENT
+@app.route("/chordinfo", methods=["POST"])
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
+def chord_info():
+    data = request.get_json()
+    chord = service.make_chord(data['root'], data['chordType'], data.get('bass'))
+    return jsonify(chord)
+
+
 if __name__ == '__main__':
     # app.run(debug=True)
     app.run(host='0.0.0.0')
