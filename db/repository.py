@@ -1,5 +1,5 @@
 import abc
-from model.chordmaker import *
+from model.chord import *
 
 # abstract class
 # don't want domain code to worry about database specifics

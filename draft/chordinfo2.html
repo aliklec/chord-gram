@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chord Information</title>
+    <style>
+        body {
+            background-image: url('https://github.com/user-attachments/assets/71026d9c-4a10-4c76-805a-e6aebb643266');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: black;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-size: 28px;
+            text-align: left;
+            width: 100%;
+        }
+        .chord-info {
+            display: none;
+            margin-top: 20px;
+            background-color: black;
+            color: white;
+            border-radius: 4px;
+            padding: 15px;
+            width: 200px;
+        }
+        .chord-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .chord-notes {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 200px;
+        }
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        select, button {
+            width: 100%;
+            max-width: 200px;
+        }
+        button {
+            background-color: #f0f0f0;
+            color: black;
+            border: 2px solid black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 4px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Chord Information</h1>
+<br><br>
+<form id="form">
+    <div class="input-group">
+        <label for="root">Root Note: </label>
+        <select id="root" name="root">
+            <option value="">Select a root note</option>
+        </select>
+    </div>
+    <br>
+    <div class="input-group">
+        <label for="chordType">Chord Type: </label>
+        <select id="chordType" name="chordType">
+            <option value="">Select a chord type</option>
+        </select>
+    </div>
+    <br>
+    <div class="input-group">
+        <label for="bass">Bass Note (optional): </label>
+        <select id="bass" name="bass">
+            <option value="">Select a bass note</option>
+        </select>
+    </div>
+    <br><br>
+    <button type="submit">Show Chord Information</button>
+</form>
+<br>
+<button id="randomChord">Generate Random Chord</button>
+<br><br>
+<div id="response" class="chord-info"></div>
+
+<script>
+const rootNotes = [
+    { value: "C", display: "C" },
+    { value: "C#", display: "C# / Db" },
+    { value: "D", display: "D" },
+    { value: "D#", display: "D# / Eb" },
+    { value: "E", display: "E" },
+    { value: "F", display: "F" },
+    { value: "F#", display: "F# / Gb" },
+    { value: "G", display: "G" },
+    { value: "G#", display: "G# / Ab" },
+    { value: "A", display: "A" },
+    { value: "A#", display: "A# / Bb" },
+    { value: "B", display: "B" }
+];
+
+const chordTypes = [
+    { value: "MAJ", display: "Major" },
+    { value: "MIN", display: "Minor" },
+    { value: "DOM7", display: "Dominant 7th" },
+    { value: "MAJ7", display: "Major 7th" },
+    { value: "MIN7", display: "Minor 7th" },
+    { value: "SUS2", display: "Suspended 2nd" },
+    { value: "SUS4", display: "Suspended 4th" },
+    { value: "ADD9", display: "Add 9" },
+    { value: "MIN_ADD9", display: "Minor Add 9" },
+    { value: "DIM7", display: "Diminished 7th" }
+];
+
+function populateSelect(selectId, options) {
+    const selectElement = document.getElementById(selectId);
+    options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.display;
+        selectElement.appendChild(optionElement);
+    });
+}
+
+function populateSelects() {
+    populateSelect('root', rootNotes);
+    populateSelect('chordType', chordTypes);
+    populateSelect('bass', [{ value: "", display: "Select a bass note" }].concat(rootNotes));
+}
+
+function formatChordInfo(chordInfo) {
+    return `
+        <div class="chord-name">${chordInfo.name}</div>
+        <div class="chord-notes">Notes: ${chordInfo.notes.join(', ')}</div>
+    `;
+}
+
+async function handleSubmit(event) {
+    event.preventDefault();
+
+    const root = document.getElementById('root').value;
+    const chordType = document.getElementById('chordType').value;
+    const bass = document.getElementById('bass').value;
+
+    if (!root || !chordType) {
+        document.getElementById('response').innerHTML = "Please select a root note and chord type";
+        return;
+    }
+
+    const chordData = {
+        root: root,
+        chordType: chordType,
+        bass: bass || null
+    };
+
+    try {
+        const response = await fetch('http://localhost:5000/chordinfo', {
+            method: 'POST',
+            body: JSON.stringify(chordData),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        document.getElementById('response').innerHTML = formatChordInfo(result);
+        document.getElementById('response').style.display = 'block';
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        document.getElementById('response').innerHTML = "Error: " + error.message;
+    }
+}
+
+async function handleRandomChord() {
+    try {
+        const response = await fetch('http://localhost:5000/randomchord', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        document.getElementById('response').innerHTML = formatChordInfo(result);
+        document.getElementById('response').style.display = 'block';
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        document.getElementById('response').innerHTML = "Error: " + error.message;
+    }
+}
+
+const form = document.getElementById("form");
+form.addEventListener("submit", handleSubmit);
+
+const randomChordButton = document.getElementById("randomChord");
+randomChordButton.addEventListener("click", handleRandomChord);
+
+populateSelects();
+</script>
+
+</body>
+</html>

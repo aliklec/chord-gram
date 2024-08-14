@@ -1,3 +1,4 @@
+# run DB locally for these tests to work
 from db.mysql_repository import *
 
 repo = MysqlRepository()

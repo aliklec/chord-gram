@@ -3,9 +3,8 @@ from model.ngrams import *
 
 def test_ngrams():
     testdata = ["A B C", "E F G"]
-    testgrams = Ngrams(testdata, 2)
+    testgrams = Ngrams(testdata)
     assert testgrams.song_data == ["A B C", "E F G"]
-    assert testgrams.n == 2
 
 
 def test_ngrams_data():
@@ -15,8 +14,8 @@ def test_ngrams_data():
         "A G F A",
         "G F A B",
     ]
-    testgrams = Ngrams(testdata,2)
-    ngram_counts = testgrams.get_ngram_counts()
+    testgrams = Ngrams(testdata)
+    ngram_counts = testgrams.get_ngrams(2)
     assert ngram_counts.get("A am", 0) == 3
     assert ngram_counts.get("F A", 0) == 2
     assert ngram_counts.get("C am", 0) == 1

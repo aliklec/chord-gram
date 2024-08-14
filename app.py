@@ -48,6 +48,11 @@ def chord_info():
     chord = service.make_chord(data['root'], data['chordType'], data.get('bass'))
     return jsonify(chord)
 
+@app.route("/randomchord", methods=["GET"])
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
+def random_chord():
+    chord = service.make_random()
+    return jsonify(chord)
 
 if __name__ == '__main__':
     # app.run(debug=True)
