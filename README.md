@@ -1,8 +1,6 @@
 # Chord-Gram
 
-
-https://arizona.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2cb93972-474a-4bcd-aaf3-b1cf006bc398
-
+https://github.com/user-attachments/assets/52961a84-270b-461c-a1de-be69d2e2618b
 
 ### Overview
 Chord-gram is a program that analyzes chord data from songs. It can be used to generate n-grams based on the chord data, as well as provide information about the counts of the n-grams in order to show common chord combinations. Another feature of chord-gram is the ability to generate new chord sequences. Given a particular starting chord, chord-gram can generate a sequence of chords that are likely to follow. The program uses a database to store chord information and has a web interface that lets the user generate different chord progressions by entering a starting chord.
