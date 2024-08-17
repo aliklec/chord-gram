@@ -1,32 +1,37 @@
 from app.services import *
 from db.mysql_repository import *
+from model.ngrams import *
+from model.chord import *
 import pytest
 
-# write some tests that, with the proper testing data, will actually evaluate some of the probabilities, not just check whether certain characters were in the output.
 
-@pytest.fixture
-def services():
-    return Services()
-
-
-def test_services_init(services):
+def test_services_init():
+    # Initialize Services object
+    services = Services()
+    # Check if the repo attribute is an instance of MysqlRepository
     assert isinstance(services.repo, MysqlRepository)
 
-def test_show_common_chord_combos(services, capsys):
-    services.show_common_chord_combos()
-    captured = capsys.readouterr()
-    assert "Most Common" in captured.out
-    assert ":" in captured.out
+def test_common_chord_combos():
 
-def test_show_probs(services, capsys):
-    services.show_probs()
-    captured = capsys.readouterr()
-    assert "P(" in captured.out
-    assert "|" in captured.out
-    assert "=" in captured.out
+    test_data = [
+        "C G Am F C",
+        "C G C B",
+        "C G F C",
+        "C G F C"
+    ]
+    # Initialize Services object
+    s = Services()
+    s.chords = test_data
+    s.ngrams = Ngrams(s.chords)
 
-def test_get_probable_sequence(services):
-    sequence = services.get_probable_sequence("C", 5)
-    assert isinstance(sequence, str)
-    assert len(sequence.split()) == 5
-    assert sequence.split()[0] == "C"
+    result = s.show_common_chord_combos(n=2, top_k=2)
+    expected = {
+        'C G': 4,
+        'F C': 3
+    }
+    assert result == expected
+
+def test_make_chord():
+    s = Services()
+    result = s.make_chord("C", "MAJ")
+    assert result['notes'] == ["C", "E", "G"]

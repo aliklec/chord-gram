@@ -1,4 +1,4 @@
-# run DB locally for these tests to work
+import pytest
 from db.mysql_repository import *
 
 repo = MysqlRepository()
