@@ -1,7 +1,5 @@
 # Chord-Gram
 
-https://github.com/user-attachments/assets/52961a84-270b-461c-a1de-be69d2e2618b
-
 ### Overview
 Chord-gram is a program that analyzes chord data from songs. It can be used to generate n-grams based on the chord data, as well as provide information about the counts of the n-grams in order to show common chord combinations. Another feature of chord-gram is the ability to generate new chord sequences. Given a particular starting chord, chord-gram can generate a sequence of chords that are likely to follow. The program uses a database to store chord information and has a web interface that lets the user generate different chord progressions by entering a starting chord.
 
@@ -34,3 +32,6 @@ Other updates that would be useful in the future would be allowing the user to c
 - Hahn-Powell, Gus. _Language models (beginner)_. https://parsertongue.org/tutorials/language-models-beginner/
 - Jurafsky, D. & Martin, J. (2024). _Speech and Language Processing_. https://web.stanford.edu/~jurafsky/slp3/
 - Kumaresan, Sundharesan (2024). "Cracking the Language Code: A Comprehensive Guide to N-Gram Models and Text Generation". https://medium.com/@sundharesansk11/cracking-the-language-code-a-comprehensive-guide-to-n-gram-models-and-text-generation-b670335ce6e8
+
+### Demo
+https://github.com/user-attachments/assets/52961a84-270b-461c-a1de-be69d2e2618b
